@@ -28,14 +28,12 @@ main{padding:24px 0 50px}.grid{display:grid;grid-template-columns:1.7fr 1fr;gap:
 const SUPABASE_URL='https://mgllbqvyfiqvfxhtkbjb.supabase.co';
 const SUPABASE_KEY='sb_publishable_KTIrTB62MRMmHnovKAimtw_KgPa6Dlw';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const data=[
- {cat:'local',tag:'জিয়াগঞ্জ',title:'শহরের বিভিন্ন এলাকায় নাগরিক পরিষেবা নিয়ে নতুন উদ্যোগ',text:'স্থানীয় স্তরে পরিষেবা ও নাগরিক সুবিধা নিয়ে দিনের গুরুত্বপূর্ণ আপডেট।'},
+const data=[{cat:'local',tag:'জিয়াগঞ্জ',title:'শহরের বিভিন্ন এলাকায় নাগরিক পরিষেবা নিয়ে নতুন উদ্যোগ',text:'স্থানীয় স্তরে পরিষেবা ও নাগরিক সুবিধা নিয়ে দিনের গুরুত্বপূর্ণ আপডেট।'},
  {cat:'district',tag:'মুর্শিদাবাদ',title:'জেলায় শিক্ষা ও জনপরিষেবা নিয়ে গুরুত্বপূর্ণ আপডেট',text:'জেলার বিভিন্ন এলাকার খবর ও প্রশাসনিক আপডেট।'},
  {cat:'business',tag:'ব্যবসা',title:'স্থানীয় বাজারে আজকের কেনাবেচার চিত্র',text:'ব্যবসা-বাণিজ্য ও স্থানীয় বাজারের সাম্প্রতিক পরিস্থিতি।'},
  {cat:'sports',tag:'খেলা',title:'স্থানীয় ক্রীড়া প্রতিযোগিতায় তরুণদের অংশগ্রহণ',text:'মাঠের খবর, প্রতিযোগিতা এবং খেলোয়াড়দের আপডেট।'},
  {cat:'state',tag:'রাজ্য',title:'রাজ্যের বিভিন্ন প্রান্তের গুরুত্বপূর্ণ সংবাদ',text:'রাজ্যজুড়ে দিনের উল্লেখযোগ্য খবরের সংক্ষিপ্তসার।'},
- {cat:'entertainment',tag:'বিনোদন',title:'সংস্কৃতি ও বিনোদনের জগতে নতুন আয়োজন',text:'স্থানীয় সাংস্কৃতিক অনুষ্ঠান ও বিনোদনের খবর।'}
-];
+ {cat:'entertainment',tag:'বিনোদন',title:'সংস্কৃতি ও বিনোদনের জগতে নতুন আয়োজন',text:'স্থানীয় সাংস্কৃতিক অনুষ্ঠান ও বিনোদনের খবর।'}];
 const catNames={local:'জিয়াগঞ্জ',district:'মুর্শিদাবাদ',state:'রাজ্য',country:'দেশ',sports:'খেলা',business:'ব্যবসা',entertainment:'বিনোদন'};
 async function loadPublished(){const {data:rows,error}=await sb.from('news').select('id,title,category,content,image_url,is_breaking,created_at').eq('published',true).order('created_at',{ascending:false}).limit(30);if(!error&&rows&&rows.length){data.splice(0,data.length,...rows.map(x=>({cat:x.category,tag:catNames[x.category]||x.category,title:x.title,text:x.content,image:x.image_url,breaking:x.is_breaking})));render();}}
 function openAdmin(){document.querySelector('#adminModal').classList.add('open');}
